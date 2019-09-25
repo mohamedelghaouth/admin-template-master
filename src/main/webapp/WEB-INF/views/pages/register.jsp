@@ -27,8 +27,9 @@
     <body class="bg-black">
 
         <div class="form-box" id="login-box">
-            <div class="header">Register New Membership<spring:message code="lbl.page" text="Sign in" /></div>
-            <form:form action="${pageContext.request.contextPath}/register" method="post" modelAttribute="user_frm"  >
+            <div class="header"><spring:message code="lbl.register" text="register a new membership" /></div>
+            <form:form action="${pageContext.request.contextPath}/register" method="post" modelAttribute="user_frm">
+            	<form:errors path="*" cssClass="alert alert-danger" element="div"/>
                 <div class="body bg-gray">
                     
                     <div class="form-group">
@@ -51,7 +52,7 @@
 
                     <button type="submit" class="btn bg-olive btn-block">Sign me up</button>
 
-                    <a href="/login" class="text-center">I already have a membership</a>
+                    <a href="${pageContext.request.contextPath}/" class="text-center">I already have a membership</a>
                 </div>
             </form:form>
 

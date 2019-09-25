@@ -9,7 +9,8 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx 
- 		 http://www.springframework.org/schema/tx/spring-tx.xsd">
+ 		 http://www.springframework.org/schema/tx/spring-tx.xsd
+ 		 ">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -61,6 +62,7 @@
 		<beans:property name="dataSource" ref="dataSource" /><beans:property name="annotatedClasses">
 			<beans:list>
 				<beans:value>app.model.USER_PARAM</beans:value>
+				<beans:value>app.model.Roles</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -88,7 +90,7 @@
 	</beans:bean>
 	
 	
-	  <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	

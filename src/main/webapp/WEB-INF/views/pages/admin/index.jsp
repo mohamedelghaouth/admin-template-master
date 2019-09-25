@@ -24,6 +24,7 @@
         <link href="${pageContext.request.contextPath}/resources/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/resources/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,52 +36,103 @@
     <body>
                      <!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>
-					Dashboard <small>Control panel</small>
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Dashboard</li>
-				</ol>
+				
+				
 			</section>
 			
 			<section class="content">
 				<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-header">
-									<h3 class="box-title">users table Table</h3>
-								</div>
-								<!-- /.box-header -->
-								<div class="box-body table-responsive no-padding">
-									<table class="table table-hover">
-										<tr>
-											<th>ID</th>
-											<th>User</th>
-											<th>Type</th>	
-											<th>Action</th>	
-										</tr>
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs pull-right">
+							<c:if test="${ not empty user_table}">
+								<li class="active"><li><a href="#users" data-toggle="tab">users</a></li>
+							</c:if>
+							<c:if test="${ not empty role_table}">
+								<li class="active"><a href="#categories" data-toggle="tab">Roles</a></li>
+							</c:if>
+							<li class="pull-left header"><i class="fa fa-inbox"></i>Tables</li>
+						</ul>
+						<div class="tab-content no-padding">
+							<c:if test="${ not empty user_table}">
+								<div class="chart tab-pane active" id="users" style="position: relative; height: 300px;">
+									<div class="col-xs-12">
+									<div class="box">
+										<div class="box-header">
+											<h3 class="box-title">users Table</h3>
+										</div>
+										<!-- /.box-header -->
+										<div class="box-body table-responsive no-padding">
+											<table class="table table-hover">
+												<tr>
+													<th>ID</th>
+													<th>User</th>
+													<th>Type</th>	
+													<th>Action</th>	
+												</tr>
+												
+												<c:forEach items="${userlist}" var="user">  
+													<tr>
+														<td> <c:out value="${user.USER_ID}"/></td>
+														<td> <c:out value="${user.USER_NAME}"/></td>
+														<td> <c:out value="${user.USER_TYPE}"/></td>
+														<td>
+																<a href="${pageContext.request.contextPath}/edit?user_ID=${user.USER_ID}" class="btn btn btn-warning btn-xs" >edite</a>
+																<a href="${pageContext.request.contextPath}/delete?user_ID=${user.USER_ID}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item');" >Delete</a>
+														</td>
+													</tr>   
+												</c:forEach>
+											
+											</table>
+										</div>
 										
-										<c:forEach items="${userlist}" var="user">  
-											<tr>
-												<td> <c:out value="${user.USER_ID}"/></td>
-												<td> <c:out value="${user.USER_NAME}"/></td>
-												<td> <c:out value="${user.USER_TYPE}"/></td>
-												<td>
-													<a href="edite?user_ID=${user.USER_ID}" class="btn btn btn-warning btn-xs">edite</a> 
-													<a href="delete?user_ID=${user.USER_ID}" class="btn btn-danger btn-xs">Delete</a>
-												</td>
-											</tr>   
-										</c:forEach>
-									
-									</table>
-								</div>
-								<!-- /.box-body -->
-							</div>
+										<!-- /.box-body -->
+									</div>
+									<div class="box-footer clearfix no-border">
+										<a href="${pageContext.request.contextPath}/edit" class="btn  btn-success btn-sm pull-righ">add user</a>										
+									</div>
+									</div>
+								</div>	
+							</c:if>
+							<c:if test="${ not empty role_table}">
+									<div class="chart tab-pane active" id="categories" style="position: relative; height: 300px;">										<div class="col-xs-12">
+												<div class="box">
+														<div class="box-header">
+															<h3 class="box-title">Roles Table</h3>
+														</div>
+														<!-- /.box-header -->
+														<div class="box-body table-responsive no-padding">
+															<table class="table table-hover">
+																<tr>
+																	<th>ID</th>
+																	<th>Name</th>
+																	<th>Action</th>
+																</tr>
+																<c:forEach items="${rolelist}" var="role">  
+																	<tr>
+																		<td> <c:out value="${role.role_ID}"/></td>
+																		<td> <c:out value="${role.name}"/></td>
+																		<td>
+																			<a href="${pageContext.request.contextPath}/edit_role?role_ID=${role.role_ID}" class="btn btn btn-warning btn-xs" >edite</a> 										
+																			<a href="${pageContext.request.contextPath}/delete_role?role_ID=${role.role_ID}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item');" >Delete</a> 										
+																		</td>
+																	</tr>   
+																</c:forEach>
+															</table>
+														</div>
+															<!-- /.box-body -->
+												</div>
+												<div class="box-footer clearfix no-border">
+													<a href="${pageContext.request.contextPath}/edit_role" class="btn  btn-success btn-sm pull-righ">add role</a>									
+												</div>	
+									    </div>	
+								   	</div>	
+
+							</c:if>	
 							<!-- /.box -->
-						</div>
-			  </div>
-		   </section>	
+						</div>	
+			    </div>
+			    </div>
+		    </section>	
 			
 			
         <!-- jQuery 2.0.2 -->

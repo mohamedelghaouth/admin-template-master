@@ -33,34 +33,18 @@
         <div class="form-box" id="login-box">
             <div class="header"><spring:message code="lbl.page" text="Sign in" /></div>
             <form:form method="post" modelAttribute="user" action="${pageContext.request.contextPath}/login">
-            <form:errors path="*" cssClass="alert alert-danger" element="div"/>
-            	<c:if test="${param.error != null}">
-					 <div class="alert alert-danger alert-dismissable">
-						 <p>Invalid username and password.</p>
-					 </div>
-				</c:if>
-				<c:if test="${param.logout != null}">
-					 <div class="alert alert-success  alert-dismissable">
-						 <p>You have been logged out successfully.</p>
-					 </div>
-				</c:if>
-				<c:if test="${param.accessDenied !=null}">
-					 <div class="alert alert-danger alert-dismissable">
-						 <p>Access Denied: You are not authorised! </p>
-					 </div>
-				</c:if>
-            	
+           		<form:errors path="*" cssClass="alert alert-danger" element="div"/>
                 <div class="body bg-gray">
                     <div class="form-group">
 	                    <spring:message code="lbl.USER_NAME" text="USER NAME" /><br>
-	                    <form:input path="USER_NAME"  class="form-control" placeholder="USER NAME"/><br>
+	                    <form:input path="USER_NAME" name="USER_NAME"  class="form-control" placeholder="USER NAME"/><br>
 	                    <form:errors path="USER_NAME" cssClass="error" />
                     </div>
                     <div class="form-group">
 	                    <spring:message code="lbl.USER_PASSWORD" text="USER PASSWORD" /><br>
-	                    <form:input path="USER_PASSWORD"  class="form-control" placeholder="USER PASSWORD" type="password"/>
+	                    <form:input path="USER_PASSWORD" name="USER_PASSWORD"  class="form-control" placeholder="USER PASSWORD" type="password"/>
 	                    <br>
-	                    <form:errors path="USER_PASSWORD" cssClass="error" />
+	                    <form:errors path="USER_PASSWORD" cssClass="error" code="javax.validation.constraints.NotEmpty.message" />
                     </div>          
                   
                 </div>

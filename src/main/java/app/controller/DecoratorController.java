@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import app.model.Functionalities;
+
 /**
  * Handles requests for the application home page.
  */
@@ -24,7 +26,7 @@ public class DecoratorController {
 	
 
 	
-	@RequestMapping(value = "/decorators/{decorator}", method = RequestMethod.GET)
+	@RequestMapping(value = "/decorators/{decorator}", method = {RequestMethod.GET,RequestMethod.POST})
 	public String pages(Locale locale, Model model,@PathVariable(value="decorator") String decorator,HttpSession session) {
 		logger.info("Welcome page! The client locale is {}.", locale);
 		
@@ -35,9 +37,12 @@ public class DecoratorController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		model.addAttribute("user4", session.getAttribute("user") );
+		model.addAttribute("user_decorator", session.getAttribute("user") );
 		
-
+		Functionalities functionalities=Functionalities.getInctance();
+		
+		model.addAttribute("functionalities", functionalities.getFUNCTIONALITIES());
+		
 		return "decorators/"+decorator;
 	}
 }

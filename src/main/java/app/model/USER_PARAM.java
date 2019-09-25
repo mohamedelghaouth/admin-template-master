@@ -8,10 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
-
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table
@@ -29,31 +32,40 @@ public class USER_PARAM implements Serializable {
 	
 	private String  USER_CODE ; 
 	
-	@javax.validation.constraints.NotEmpty(message="{javax.validation.constraints.NotEmpty.message}")
+	@NotEmpty(message="{javax.validation.constraints.NotEmpty.message}")
 	private String  USER_NAME ;
+	@NotEmpty(message="{javax.validation.constraints.NotEmpty.message}")
 	private String  USER_TYPE ;
-	@javax.validation.constraints.NotEmpty(message="{javax.validation.constraints.NotEmpty.message}") 
+	@NotEmpty(message="{javax.validation.constraints.NotEmpty.message}") 
 	private String  USER_PASSWORD;  
-	private String  USER_BANK_CODE;  
+	private String  USER_BANK_CODE;   
 	private String  USER_BRANCH_CODE;  
 	private int     NUMBER_OF_TRIES ;
 	private int     NUMBER_OF_TRIES_ALLOWED;  
 	private String  IP_ADDRESS_MANG ;
 	private String  IP_ADDRESS ;
 	private String  CONNECTED ;
+	@NotNull( message="{javax.validation.constraints.NotEmpty.message}")
 	private char    FIRST_CONNECTION; 
 	private int     NBRE_SESSION_ALLOWED; 
 	private int     NBRE_SEESION_CONNECTED ; 
 	private int     LENGTH_PASSWORD;
+	@NotNull( message="{javax.validation.constraints.NotEmpty.message}")
 	private char    COMPLEXITY_FLAG;
-	private int     EXPIRATION_PASSWORD; 
-	private Date    DATE_START_PASS; 
+	private int     EXPIRATION_PASSWORD;
+	@DateTimeFormat(iso=ISO.DATE)
+	private Date    DATE_START_PASS;
+	@DateTimeFormat(iso=ISO.DATE)
 	private Date    DATE_END_PASS  ;
+	@NotNull( message="{javax.validation.constraints.NotEmpty.message}")
 	private char    BLOCK_ACCESS  ;
+	@NotNull( message="{javax.validation.constraints.NotEmpty.message}")
 	private char    LANGUAGE_CODE  ;
 	private String  LAST_4_PWD ;
 	
-	
+	@ManyToOne
+	@JoinColumn(name="Roles_User_fk")
+	private Roles role ;
 	
 	
 	public USER_PARAM() {
@@ -66,15 +78,38 @@ public class USER_PARAM implements Serializable {
 		NBRE_SEESION_CONNECTED = 0;
 		LENGTH_PASSWORD = 0;
 		EXPIRATION_PASSWORD = 0;	
-		FIRST_CONNECTION='d';
-		COMPLEXITY_FLAG='d';
-		BLOCK_ACCESS='d';
-		LANGUAGE_CODE='d';
+		FIRST_CONNECTION='t';
+		COMPLEXITY_FLAG='t';
+		BLOCK_ACCESS='f';
+		LANGUAGE_CODE='e';
 	}
 
-
-
-	
+	public USER_PARAM(USER_PARAM user) {
+		USER_ID = user.getUSER_ID();
+		USER_CODE = user.getUSER_CODE();
+		USER_NAME = user.getUSER_NAME();
+		USER_TYPE = user.getUSER_TYPE();
+		USER_PASSWORD = user.getUSER_PASSWORD();
+		USER_BANK_CODE = user.getUSER_BANK_CODE();
+		USER_BRANCH_CODE = user.getUSER_BRANCH_CODE();
+		NUMBER_OF_TRIES = user.getNUMBER_OF_TRIES();
+		NUMBER_OF_TRIES_ALLOWED = user.getNBRE_SESSION_ALLOWED();
+		IP_ADDRESS_MANG = user.getIP_ADDRESS_MANG();
+		IP_ADDRESS = user.getIP_ADDRESS();
+		CONNECTED = user.getCONNECTED();
+		FIRST_CONNECTION = user.getFIRST_CONNECTION();
+		NBRE_SESSION_ALLOWED = user.getNBRE_SESSION_ALLOWED();
+		NBRE_SEESION_CONNECTED = user.getNBRE_SEESION_CONNECTED();
+		LENGTH_PASSWORD = user.getLENGTH_PASSWORD();
+		COMPLEXITY_FLAG = user.getCOMPLEXITY_FLAG();
+		EXPIRATION_PASSWORD = user.getEXPIRATION_PASSWORD();
+		DATE_START_PASS = user.getDATE_START_PASS();
+		DATE_END_PASS = user.getDATE_END_PASS();
+		BLOCK_ACCESS = user.getBLOCK_ACCESS();
+		LANGUAGE_CODE = user.getLANGUAGE_CODE();
+		LAST_4_PWD = user.getLAST_4_PWD();
+		role=user.getRole();
+	}
 
 	public Long getUSER_ID() {
 		return USER_ID;
@@ -216,12 +251,16 @@ public class USER_PARAM implements Serializable {
 	public void setLAST_4_PWD(String lAST_4_PWD) {
 		LAST_4_PWD = lAST_4_PWD;
 	}
-
-
-
-
-
 	
+	public Roles getRole() {
+		return role;
+	}
+
+	public void setRole(Roles prole) {
+		role = prole;
+	}
+
+	@Override
 	public String toString() {
 		return "USER_PARAM [USER_ID=" + USER_ID + ", USER_CODE=" + USER_CODE + ", USER_NAME=" + USER_NAME
 				+ ", USER_TYPE=" + USER_TYPE + ", USER_PASSWORD=" + USER_PASSWORD + ", USER_BANK_CODE=" + USER_BANK_CODE
@@ -232,8 +271,10 @@ public class USER_PARAM implements Serializable {
 				+ NBRE_SEESION_CONNECTED + ", LENGTH_PASSWORD=" + LENGTH_PASSWORD + ", COMPLEXITY_FLAG="
 				+ COMPLEXITY_FLAG + ", EXPIRATION_PASSWORD=" + EXPIRATION_PASSWORD + ", DATE_START_PASS="
 				+ DATE_START_PASS + ", DATE_END_PASS=" + DATE_END_PASS + ", BLOCK_ACCESS=" + BLOCK_ACCESS
-				+ ", LANGUAGE_CODE=" + LANGUAGE_CODE + ", LAST_4_PWD=" + LAST_4_PWD + "]";
+				+ ", LANGUAGE_CODE=" + LANGUAGE_CODE + ", LAST_4_PWD=" + LAST_4_PWD + ", Role=" + role + "]";
 	}
+
+	
 	
 	
 	
