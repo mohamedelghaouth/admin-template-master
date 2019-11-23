@@ -20,3 +20,7 @@ Travaille reste à faire
 Outils:
 ==============
  Spring MVC, Spring, Hibernate, Maven, JSP.
+
+liens utile
+==============
+admin-template-master/Web Simulator Study.docx
